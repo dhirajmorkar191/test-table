@@ -1,0 +1,27 @@
+<div class="example-container mat-elevation-z8">
+  <div class="example-table-container">
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container
+        *ngFor="let column of columns"
+        [cdkColumnDef]="column.columnDef"
+      >
+        <mat-header-cell *cdkHeaderCellDef>{{ column.header }}</mat-header-cell>
+        <mat-cell *cdkCellDef="let row">
+          <ion-avatar
+            *ngIf="column.header == 'Image'; else text"
+            class="padding-5"
+          >
+            <img src="{{ row[column.columnDef] }}" />
+          </ion-avatar>
+          <ng-template #text> {{ row[column.columnDef] }}</ng-template>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="onRowClick(row)"
+      ></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [pageSizeOptions]="[10, 20, 30]"></mat-paginator>
+</div>
